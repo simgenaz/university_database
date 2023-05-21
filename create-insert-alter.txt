@@ -1,0 +1,504 @@
+CREATE TABLE course (
+  courseCode varchar(10) NOT NULL,
+  courseName varchar(100) NOT NULL,
+  ects int(2) NOT NULL,
+  numHours int(2) NOT NULL,
+  preReq_CourseCode varchar(10) DEFAULT NULL
+);
+
+
+INSERT INTO course (courseCode, courseName, ects, numHours, prereq_courseCode) VALUES
+('comp1101', 'Java Programming', 6, 20, NULL),
+('comp1102', 'Object Oriented', 6, 25, 'cse112'),
+('comp2102', 'Data Structures', 6, 24, 'cse212'),
+('comp3334', 'Computer Networks', 6, 20, 'cse334'),
+('comp2222', 'Data Base', 6, 28, 'cse222');
+
+
+CREATE TABLE curricula (
+  currCode varchar(10) NOT NULL,
+  gradOrUGrad integer(4) NOT NULL,
+  dName varchar(50) NOT NULL
+);
+
+
+INSERT INTO curricula (currCode, gradOrUGrad, dName) VALUES
+('arch0813', 0, 'Architecture'),
+('comp', 1, 'Computer Engineering'),
+('cse0813', 1, 'Computer Engineering'),
+('cse', 1, 'Computer Engineering'),
+('eco0813', 0, 'Economics');
+
+
+CREATE TABLE curriculaCourses (
+  currCode varchar(10) NOT NULL,
+  dName varchar(50) NOT NULL,
+  courseCode varchar(10) NOT NULL
+);
+
+
+INSERT INTO curriculacourses (currCode, dName, courseCode) VALUES
+('comp', 'Computer Engineering', 'comp1101'),
+('comp', 'Computer Engineering', 'comp1102'),
+('comp', 'Computer Engineering', 'comp2102'),
+('comp', 'Computer Engineering', 'comp3305'),
+('comp', 'Computer Engineering', 'comp2222');
+
+
+CREATE TABLE department (
+  dName varchar(50) NOT NULL,
+  budget double DEFAULT NULL,
+  headSSn varchar(20) NOT NULL,
+  buildingName varchar(50) NOT NULL
+);
+
+
+INSERT INTO department (dName, budget, headSSn, buildingName) VALUES
+('Architecture', NULL, 'i4', 'dk'),
+('Computer Engineering', NULL, 'i1', 'lmf'),
+('Visual arts', NULL, 'i5', 'maslak'),
+('Mathematics', NULL, 'i2', 'dmf'),
+('Economics', NULL, 'i3', 'amf');
+
+
+CREATE TABLE emails (
+  email varchar(100) NOT NULL,
+  sssn varchar(20) NOT NULL
+);
+
+
+INSERT INTO emails (email, sssn) VALUES
+('st1@isik.edu.tr', 's1'),
+('st2@isik.edu.tr', 's2'),
+('st3@isik.edu.tr', 's3'),
+('st4@isik.edu.tr', 's4'),
+('st5@isik.edu.tr', 's5');
+
+
+CREATE TABLE gradstudent (
+  sssn varchar(20) NOT NULL,
+  advisorSsn varchar(20) NOT NULL
+);
+
+
+INSERT INTO gradstudent (sssn, advisorSsn) VALUES
+('s6', 'i1'),
+('s7', 'i2'),
+('s8', 'i3'),
+('s9', 'i4'),
+('s10', 'i5');
+
+
+CREATE TABLE instructor (
+  ssn varchar(20) NOT NULL,
+  iName varchar(100) DEFAULT NULL,
+  rankk varchar(45) DEFAULT NULL,
+  baseSalary double DEFAULT NULL,
+  dName varchar(50) NOT NULL,
+  extraSalary double DEFAULT NULL
+);
+
+
+INSERT INTO instructor (ssn, iname, rankk, baseSalary, dName, extraSalary) VALUES
+('i1', 'Aysegul Tuysuz Erman', 'Prof', 2500, 'Computer Engineering', NULL),
+('i2', 'Banu Inanc Uyan Dur', 'AssocProf', 1500, 'Visual Arts', NULL),
+('i3', 'Olcay Yildiz', 'Prof', 2500, 'Computer Engineering', NULL),
+('i4', 'Emine Ekin ', 'Prof', 2500, 'Computer Engineering', NULL),
+('i5', 'Ozay Ezerceli', 'lecturer', 1000, 'Computer Engineering', NULL);
+
+
+CREATE TABLE project (
+  leadSsn varchar(20) NOT NULL,
+  prName varchar(45) NOT NULL,
+  subject varchar(450) DEFAULT NULL,
+  budget double DEFAULT NULL,
+  startDate date NOT NULL,
+  endDate date NOT NULL,
+  contrDName varchar(50) NOT NULL
+);
+
+
+INSERT INTO project (leadSsn, prName, subject, budget, startDate, endDate, contrDName) VALUES
+('i1', 'job1', 'about computers', 500000, '2022-06-01', '2023-01-01', 'Computer Engineering'),
+('i2', 'job2', 'about life', 10000, '2022-02-02', '2023-06-12', 'Computer Engineering'),
+('i3', 'job3', 'about math', 20000, '2022-04-02', '2023-06-16', 'Mathematics'),
+('i4', 'job4', 'companies', 30000, '2022-03-02', '2023-06-15', 'New Product Development'),
+('i5', 'job3', 'money talks', 1000000, '2022-01-01', '2023-01-01', 'Economics');
+
+
+CREATE TABLE GradsInProjects (
+  PrjleadSsn varchar(20) NOT NULL,
+  prName varchar(45) NOT NULL,
+  gradsssn varchar(20) NOT NULL,
+  workingHours int(11) DEFAULT NULL
+);
+
+
+INSERT INTO gradsinprojects (PrjleadSsn, prName, gradsssn, workingHours) VALUES
+('i1', 'job1', 's1', 40),
+('i2', 'job2', 's2', 8),
+('i3', 'job3', 's3', 10),
+('i4', 'job4', 's4', 5),
+('i5', 'job5', 's5', 12);
+
+
+CREATE TABLE InstrInProjects (
+  PrjleadSsn varchar(20) NOT NULL,
+  prName varchar(45) NOT NULL,
+  issn varchar(20) NOT NULL,
+  workingHours int(11) DEFAULT NULL
+);
+
+
+INSERT INTO InstrInProjects (PrjleadSsn, prName, issn, workingHours) VALUES
+('i1', 'job1', 'i1', 12),
+('i2', 'job2', 'i2', 11),
+('i3', 'job3', 'i3', 10),
+('i4', 'job4', 'i4', 14),
+('i5', 'job5', 'i5', 15);
+
+
+CREATE TABLE sectionn (
+  issn varchar(20) NOT NULL,
+  courseCode varchar(10) NOT NULL,
+  yearr int(11) NOT NULL,
+  semester varchar(11) NOT NULL,
+  sectionId int(11) NOT NULL,
+  quota int(3) NOT NULL
+);
+
+
+INSERT INTO sectionn (issn, courseCode, yearr, semester, sectionId, quota) VALUES
+('i1', 'comp2222', 2022, 'spring', 1, 40),
+('i2', 'comp2222', 2022, 'spring', 2, 40),
+('i3', 'math2103', 2023, 'summer', 1, 100),
+('i4', 'comp2222', 2023, 'spring', 2, 40),
+('i5', 'comp1101', 2023, 'spring', 1, 40);
+
+
+CREATE TABLE student (
+  sssn varchar(20) NOT NULL,
+  gradorUgrad tinyint(4) NOT NULL,
+  advisorSsn varchar(20) NOT NULL,
+  currCode varchar(10) NOT NULL,
+  studentId varchar(10) NOT NULL,
+  dName varchar(50) NOT NULL,
+  sName varchar(45) NOT NULL
+);
+
+
+INSERT INTO student (sssn, gradorUgrad, advisorSsn, currCode, studentId, dName, sname) VALUES
+('s1', 0, 'i1', 'comp', 'st1' , 'Computer Engineering' , 'student1'),
+('s2', 1, 'i2', 'comp', 'st2' , 'Computer Engineering' , 'student2'),
+('s3', 1, 'i3', 'comp', 'st3' , 'Computer Engineering' , 'student3'),
+('s4', 0, 'i4', 'comp', 'st4' , 'Computer Engineering' , 'student4'),
+('s5', 0, 'i5', 'comp', 'st5' , 'Computer Engineering' , 'student5');
+
+
+CREATE TABLE TimeSlot (
+  dayy varchar(12) NOT NULL,
+  hourr int(11) NOT NULL
+);
+
+
+INSERT INTO timeslot (dayy, hourr) VALUES
+('Friday', 1),
+('Friday', 2),
+('Friday', 3),
+('Friday', 4),
+('Friday', 5),
+('Friday', 6),
+('Friday', 7),
+('Friday', 8),
+('Friday', 9),
+('Friday', 10),
+('Monday', 1),
+('Monday', 2),
+('Monday', 3),
+('Monday', 4),
+('Monday', 5),
+('Monday', 6),
+('Monday', 7),
+('Monday', 8),
+('Monday', 9),
+('Monday', 10),
+('Saturday', 1),
+('Saturday', 2),
+('Saturday', 3),
+('Saturday', 4),
+('Saturday', 5),
+('Saturday', 6),
+('Thursday', 1),
+('Thursday', 2),
+('Thursday', 3),
+('Thursday', 4),
+('Thursday', 5),
+('Thursday', 6),
+('Thursday', 7),
+('Thursday', 8),
+('Thursday', 9),
+('Thursday', 10),
+('Tuesday', 1),
+('Tuesday', 2),
+('Tuesday', 3),
+('Tuesday', 4),
+('Tuesday', 5),
+('Tuesday', 6),
+('Tuesday', 7),
+('Tuesday', 8),
+('Tuesday', 9),
+('Tuesday', 10),
+('Wednesday', 1),
+('Wednesday', 2),
+('Wednesday', 3),
+('Wednesday', 4),
+('Wednesday', 5),
+('Wednesday', 6),
+('Wednesday', 7),
+('Wednesday', 8),
+('Wednesday', 9),
+('Wednesday', 10);
+
+
+CREATE TABLE ExamOfSection (
+  examName varchar(20) NOT NULL,
+  date date DEFAULT NULL,
+  issn varchar(20) NOT NULL,
+  courseCode varchar(10) NOT NULL,
+  yearr int(11) NOT NULL,
+  semester varchar(11) NOT NULL,
+  sectionId int(11) NOT NULL
+) ;
+
+
+INSERT INTO examofsection (examName, date, issn, courseCode, yearr, semester, sectionId) VALUES
+('MT1', '2023-06-17', 'i5', 'comp1101', 2023, 'spring', 1),
+('MT2', '2023-06-17', 'i5', 'comp1101', 2023, 'spring', 1),
+('FINAL', '2023-06-17', 'i5', 'comp1101', 2023, 'spring', 1),
+('MT1', '2023-06-12', 'i3', 'math2103', 2023, 'spring', 1),
+('MT2', '2023-06-12', 'i3', 'math2103', 2023, 'spring', 1),
+('FINAL', '2023-06-12', 'i3', 'math2103', 2023, 'spring', 1),
+('M1', '2023-03-01', 'i4', 'comp2222', 2023, 'spring', 2),
+('M2', '2023-05-01', 'i4', 'comp2222', 2023, 'spring', 2),
+('FINAL', '2023-01-01', 'i4', 'comp2222', 2023, 'spring', 2);
+
+
+CREATE TABLE QuestionsOfExam (
+	semester varchar(11) NOT NULL,
+    examName varchar(20) NOT NULL,
+	issn varchar(20) NOT NULL,
+	courseCode varchar(10) NOT NULL,
+	yearr int(11) NOT NULL,
+    sectionId int(11) NOT NULL,
+    qNo int(11) NOT NULL,
+    qPoint int(11) NOT NULL
+    );
+
+    
+INSERT INTO QuestionsOfExam (semester, examName, issn, courseCode, yearr, sectionId, qNo, qPoint) VALUES
+
+   ('spring', 'M1' , 'i4' ,  'comp2222', 2023 , 2 , 1 , 20),
+   ('spring', 'M1' , 'i4' ,  'comp2222', 2023 , 2 , 2 , 20),
+   ('spring', 'M1' , 'i4' ,  'comp2222', 2023 , 2 , 3 , 15),
+   ('spring', 'M1' , 'i4' ,  'comp2222', 2023 , 2 , 4 , 15),
+   ('spring', 'M1' , 'i4' ,  'comp2222', 2023 , 2 , 5 , 30),
+   ('spring', 'M1' , 'i5' ,  'comp1101', 2023 , 1 , 1 , 20),
+   ('spring', 'M1' , 'i5' ,  'comp1101', 2023 , 1 , 2 , 20),
+   ('spring', 'M1' , 'i5' ,  'comp1101', 2023 , 1 , 3 , 15),
+   ('spring', 'M1' , 'i5' ,  'comp1101', 2023 , 1 , 4 , 15),
+   ('spring', 'M1' , 'i5' ,  'comp1101', 2023 , 1 , 5 , 30),
+   ('spring', 'M1' , 'i3' ,  'math2103', 2023 , 1 , 1 , 20),
+   ('spring', 'M1' , 'i3' ,  'math2103', 2023 , 1 , 2 , 20),
+   ('spring', 'M1' , 'i3' ,  'math2103', 2023 , 1 , 3 , 15),
+   ('spring', 'M1' , 'i3' ,  'math2103', 2023 , 1 , 4 , 15),
+   ('spring', 'M1' , 'i3' ,  'math2103', 2023 , 1 , 5 , 30),
+   ('spring', 'M2' , 'i4' ,  'comp2222', 2023 , 2 , 1 , 20),
+   ('spring', 'M2' , 'i4' ,  'comp2222', 2023 , 2 , 2 , 20),
+   ('spring', 'M2' , 'i4' ,  'comp2222', 2023 , 2 , 3 , 15),
+   ('spring', 'M2' , 'i4' ,  'comp2222', 2023 , 2 , 4 , 15),
+   ('spring', 'M2' , 'i4' ,  'comp2222', 2023 , 2 , 5 , 30),
+   ('spring', 'M2' , 'i5' ,  'comp1101', 2023 , 1 , 1 , 20),
+   ('spring', 'M2' , 'i5' ,  'comp1101', 2023 , 1 , 2 , 20),
+   ('spring', 'M2' , 'i5' ,  'comp1101', 2023 , 1 , 3 , 15),
+   ('spring', 'M2' , 'i5' ,  'comp1101', 2023 , 1 , 4 , 15),
+   ('spring', 'M2' , 'i5' ,  'comp1101', 2023 , 1 , 5 , 30),
+   ('spring', 'M2' , 'i3' ,  'math2103', 2023 , 1 , 1 , 20),
+   ('spring', 'M2' , 'i3' ,  'math2103', 2023 , 1 , 2 , 20),
+   ('spring', 'M2' , 'i3' ,  'math2103', 2023 , 1 , 3 , 15),
+   ('spring', 'M2' , 'i3' ,  'math2103', 2023 , 1 , 4 , 15),
+   ('spring', 'M2' , 'i3' ,  'math2103', 2023 , 1 , 5 , 30);
+    
+    
+CREATE TABLE StudentGradesPerQuestion (
+	semester varchar(11) NOT NULL,
+	sssn varchar(20) NOT NULL,
+	issn varchar(20) NOT NULL,
+	courseCode varchar(10) NOT NULL,
+	yearr int(11) NOT NULL,
+    sectionId int(11) NOT NULL,
+    qNo int(11) NOT NULL,
+    pointsEarned int(11) NOT NULL,
+    examName varchar(20) NOT NULL
+    );
+       
+
+INSERT INTO StudentGradesPerQuestion (semester, sssn, issn, courseCode, yearr, sectionId, qNo, pointsEarned, examName) VALUES
+	('spring', 's3' , 'i4' ,  'comp2222', 2023 , 2 , 1 , 15 , 'M1'),
+    ('spring', 's3' , 'i4' ,  'comp2222', 2023 , 2 , 2 , 15 , 'M1'),
+    ('spring', 's3' , 'i4' ,  'comp2222', 2023 , 2 , 3 , 15 , 'M1'),
+    ('spring', 's3' , 'i4' ,  'comp2222', 2023 , 2 , 4 , 15 , 'M1'),
+    ('spring', 's3' , 'i4' ,  'comp2222', 2023 , 2 , 5 , 5 , 'M1'),
+    ('spring', 's2' , 'i4' ,  'comp2222', 2023 , 2 , 1 , 5 , 'M2'),
+    ('spring', 's2' , 'i4' ,  'comp2222', 2023 , 2 , 2 , 15 , 'M2'),
+    ('spring', 's2' , 'i4' ,  'comp2222', 2023 , 2 , 3 , 10 , 'M2'),
+    ('spring', 's2' , 'i4' ,  'comp2222', 2023 , 2 , 4 , 20 , 'M2'),
+    ('spring', 's2' , 'i4' ,  'comp2222', 2023 , 2 , 5 , 15 , 'M2'),
+    ('spring', 's1' , 'i5' ,  'comp1101', 2023 , 1 , 1 , 10 , 'FINAL'),
+    ('spring', 's1' , 'i5' ,  'comp1101', 2023 , 1 , 2 , 15 , 'FINAL'),
+    ('spring', 's1' , 'i5' ,  'comp1101', 2023 , 1 , 3 , 5 , 'FINAL'),
+    ('spring', 's1' , 'i5' ,  'comp1101', 2023 , 1 , 4 , 10 , 'FINAL'),
+    ('spring', 's1' , 'i5' ,  'comp1101', 2023 , 1 , 5 , 25 , 'FINAL');
+    
+
+CREATE TABLE enrollment (
+  sssn varchar(20) NOT NULL,
+  issn varchar(20) NOT NULL,
+  courseCode varchar(10) NOT NULL,
+  sectionId int(11) NOT NULL,
+  yearr int(11) NOT NULL,
+  semester varchar(11) NOT NULL,
+  grade varchar(2) DEFAULT NULL,
+  roomNumber varchar(50) NOT NULL
+);
+
+
+INSERT INTO enrollment (sssn, issn, courseCode, sectionId, yearr, semester, grade, roomNumber) VALUES
+('s1', 'i4', 'comp2222', 2, 2023, 'spring', 'CC' , 'amf315'),
+('s1', 'i3', 'math2103', 1, 2023, 'spring', 'DC' , 'amf315'),
+('s1', 'i5', 'comp1101', 1, 2022, 'spring', 'BA' , 'amf315'),
+('s2', 'i4', 'comp2222', 2, 2022, 'spring', 'BA' , 'lmf306' ),
+('s2', 'i3', 'math2103', 1, 2022, 'spring', 'DD' , 'lmf306' ),
+('s2', 'i5', 'comp1101', 1, 2023, 'spring', 'CC' , 'lmf306' ),
+('s3', 'i4', 'comp2222', 2, 2023, 'spring', 'BA' , 'lmf309'),
+('s3', 'i3', 'math2103', 1, 2023, 'spring', 'BB' , 'lmf309'),
+('s3', 'i5', 'comp1101', 1, 2022, 'spring', 'AA' , 'lmf309'),
+('s4', 'i4', 'comp2222', 2, 2022, 'spring', 'BA' , 'dmf314'),
+('s4', 'i3', 'math2103', 1, 2023, 'spring', 'CC' , 'dmf314'),
+('s4', 'i5', 'comp1101', 1, 2022, 'spring', 'BB' , 'dmf314'), 
+('s5', 'i4', 'comp2222', 2, 2022, 'spring', 'DD' , 'lmf309'),
+('s5', 'i3', 'math2103', 1, 2023, 'spring', 'BA' , 'lmf309'),
+('s5', 'i5', 'comp1101', 1, 2023, 'spring', 'AA' , 'lmf309');
+
+
+CREATE TABLE prevdegree (
+  college varchar(100) NOT NULL,
+  degree varchar(20) NOT NULL,
+  yearr int(11) NOT NULL,
+  gradsssn varchar(20) NOT NULL
+);
+
+
+INSERT INTO prevdegree (college, degree, yearr, gradsssn) VALUES
+('Işık Un', 'computer Engineer ba', 2023, 's1'),
+('Işık Un', 'computer Engineer bb', 2022, 's2'),
+('Işık Un', 'computer Engineer aa', 2023, 's3'),
+('Işık Un', 'computer Engineer ba', 2022, 's4'),
+('Işık Un', 'computer Engineer ma', 2023, 's5');
+
+CREATE TABLE BuildClass (
+    buildingName varchar(50) NOT NULL,
+    roomNumber varchar(50) NOT NULL,
+    capacity int(100) NOT NULL
+);
+
+
+INSERT INTO BuildClass (buildingName, roomNumber, capacity) VALUES 
+('amf' , 'amf315' , 55),
+('lmf' , 'lmf309' , 60),
+('lmf' , 'lmf306' , 60),
+('dmf' , 'dmf214' , 80),
+('dmf' , 'dmf314' , 100);
+
+
+
+ALTER TABLE course
+  ADD PRIMARY KEY (courseCode),
+  ADD KEY fk_course_course1 (preReq_CourseCode);
+
+
+ALTER TABLE curricula
+  ADD PRIMARY KEY (currCode,dName),
+  ADD KEY dName (dName);
+
+
+ALTER TABLE curriculacourses
+  ADD PRIMARY KEY (currCode,dName,courseCode),
+  ADD KEY courseCode (courseCode);
+
+
+ALTER TABLE department
+  ADD PRIMARY KEY (dName),
+  ADD KEY headSSn (headSSn);
+
+
+ALTER TABLE emails
+  ADD PRIMARY KEY (email,sssn),
+  ADD KEY sssn (sssn);
+
+
+ALTER TABLE enrollment
+  ADD PRIMARY KEY (sssn,issn,courseCode,yearr,semester,sectionId),
+  ADD KEY issn (issn,courseCode,yearr,semester,sectionId);
+
+
+ALTER TABLE examofsection
+  ADD PRIMARY KEY (examName,issn,courseCode,yearr,semester,sectionId),
+  ADD KEY issn (issn,courseCode,yearr,semester,sectionId);
+
+
+ALTER TABLE gradstudent
+  ADD PRIMARY KEY (sssn),
+  ADD KEY advisorSsn (advisorSsn);
+
+
+ALTER TABLE instructor
+  ADD PRIMARY KEY (ssn),
+  ADD KEY fk_instructor_department (dName);
+
+
+ALTER TABLE prevdegree
+  ADD PRIMARY KEY (college,degree,yearr,gradsssn),
+  ADD KEY gradsssn (gradsssn);
+
+
+ALTER TABLE project
+  ADD PRIMARY KEY (leadSsn,prName),
+  ADD KEY contrDName (contrDName);
+
+
+ALTER TABLE GradsInProjects 
+  ADD PRIMARY KEY (PrjleadSsn,prName,gradsssn),
+  ADD KEY gradsssn (gradsssn);
+
+
+ALTER TABLE instrinprojects
+  ADD PRIMARY KEY (PrjleadSsn,prName,issn),
+  ADD KEY issn (issn);
+
+
+ALTER TABLE sectionn
+  ADD PRIMARY KEY (issn,courseCode,yearr,semester,sectionId),
+  ADD KEY courseCode (courseCode);
+
+
+ALTER TABLE student
+  ADD PRIMARY KEY (sssn),
+  ADD UNIQUE KEY studentId  (studentId),
+  ADD KEY currCode (currCode),
+  ADD KEY advisorSsn (advisorSsn);
+
+
+ALTER TABLE timeslot
+  ADD PRIMARY KEY (dayy,hourr);
+
+
